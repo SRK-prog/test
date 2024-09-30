@@ -1,0 +1,134 @@
+{
+  "id": "rkwdTQgoiXu0918crgdeB",
+  "created": "2024-09-20T16:44:14.109Z",
+  "updated": "2024-09-20T16:44:35.176Z",
+  "projectId": "iNMJiLntYlyLKmE8qNKTx",
+  "folderId": null,
+  "status": "ENABLED",
+  "schedule": null,
+  "publishedVersionId": "AyEu6CGlmhbbhE88PLNlN",
+  "version": {
+    "id": "AyEu6CGlmhbbhE88PLNlN",
+    "created": "2024-09-20T16:44:14.116Z",
+    "updated": "2024-09-20T16:44:36.211Z",
+    "flowId": "rkwdTQgoiXu0918crgdeB",
+    "displayName": "Amazon S3 Trigger",
+    "trigger": {
+      "name": "trigger",
+      "type": "PIECE_TRIGGER",
+      "valid": true,
+      "settings": {
+        "input": {
+          "auth": "{{connections['amazon-s3']}}",
+          "folderPath": "test/"
+        },
+        "pieceName": "@activepieces/piece-amazon-s3",
+        "pieceType": "OFFICIAL",
+        "inputUiInfo": {},
+        "packageType": "REGISTRY",
+        "triggerName": "new_file",
+        "pieceVersion": "0.3.5"
+      },
+      "nextAction": {
+        "name": "step_1",
+        "type": "PIECE",
+        "valid": true,
+        "settings": {
+          "input": {
+            "url": "[[zbrainFlowURL]]/public/v1/tools/run?tenantId=[[tenantId]]",
+            "body": {
+              "name": "run-tool",
+              "type": "PIECE",
+              "valid": true,
+              "flowId": "[[flowId]]",
+              "settings": {
+                "input": {
+                  "key": "{{trigger['Key']}}",
+                  "auth": "[[auth]]"
+                },
+                "pieceName": "@activepieces/piece-amazon-s3",
+                "pieceType": "OFFICIAL",
+                "actionName": "read-file",
+                "inputUiInfo": {
+                  "customizedInputs": {}
+                },
+                "packageType": "REGISTRY",
+                "pieceVersion": "~0.3.1",
+                "errorHandlingOptions": {
+                  "retryOnFailure": {
+                    "value": false
+                  },
+                  "continueOnFailure": {
+                    "value": false
+                  }
+                }
+              },
+              "displayName": "Amazon S3"
+            },
+            "method": "POST",
+            "headers": {
+              "Authorization": "Bearer [[userAPIKey]]"
+            },
+            "failsafe": false,
+            "queryParams": {}
+          },
+          "pieceName": "@activepieces/piece-http",
+          "pieceType": "OFFICIAL",
+          "actionName": "send_request",
+          "inputUiInfo": {},
+          "packageType": "REGISTRY",
+          "pieceVersion": "0.3.10",
+          "errorHandlingOptions": {
+            "retryOnFailure": {
+              "value": false
+            },
+            "continueOnFailure": {
+              "value": false
+            }
+          }
+        },
+        "nextAction": {
+          "name": "step_2",
+          "type": "PIECE",
+          "valid": true,
+          "settings": {
+            "input": {
+              "url": "[[zbrainWebhookURL]]/api/worker-trigger",
+              "body": {
+                "file": "{{step_1.body}}",
+                "tenantId": "[[tenantId]]",
+                "workerId": "[[workerId]]"
+              },
+              "method": "POST",
+              "headers": {
+                "Authorization": "Bearer [[userAPIKey]]"
+              },
+              "failsafe": false,
+              "queryParams": {}
+            },
+            "pieceName": "@activepieces/piece-http",
+            "pieceType": "OFFICIAL",
+            "actionName": "send_request",
+            "inputUiInfo": {},
+            "packageType": "REGISTRY",
+            "pieceVersion": "0.3.10",
+            "errorHandlingOptions": {
+              "retryOnFailure": {
+                "value": false
+              },
+              "continueOnFailure": {
+                "value": false
+              }
+            }
+          },
+          "displayName": "Send to Webhook"
+        },
+        "displayName": "Read File"
+      },
+      "displayName": "New File"
+    },
+    "updatedBy": "649c21fc76935cd4a2b9bee3",
+    "valid": true,
+    "state": "LOCKED"
+  }
+}

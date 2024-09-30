@@ -1,0 +1,58 @@
+{
+  "id": "efJQxREP0Z9WStNtXmvgo",
+  "created": "2024-09-20T13:24:40.247Z",
+  "updated": "2024-09-20T13:24:40.247Z",
+  "projectId": "iNMJiLntYlyLKmE8qNKTx",
+  "folderId": null,
+  "status": "DISABLED",
+  "schedule": null,
+  "publishedVersionId": null,
+  "version": {
+    "id": "f7diDHcXvh29afqsJuyLM",
+    "created": "2024-09-20T13:24:40.249Z",
+    "updated": "2024-09-20T13:24:40.249Z",
+    "flowId": "efJQxREP0Z9WStNtXmvgo",
+    "displayName": "Untitled",
+    "trigger": {
+      "name": "trigger",
+      "type": "WEBHOOK",
+      "valid": true,
+      "settings": {
+        "inputUiInfo": {
+          "currentSelectedData": ""
+        }
+      },
+      "nextAction": {
+        "name": "step_1",
+        "type": "PIECE",
+        "valid": true,
+        "settings": {
+          "input": {
+            "input": ""
+          },
+          "pieceName": "@activepieces/piece-inputs",
+          "pieceType": "CUSTOM",
+          "actionName": "text_input",
+          "inputUiInfo": {
+            "customizedInputs": {}
+          },
+          "packageType": "ARCHIVE",
+          "pieceVersion": "~0.0.1",
+          "errorHandlingOptions": {
+            "retryOnFailure": {
+              "value": false
+            },
+            "continueOnFailure": {
+              "value": false
+            }
+          }
+        },
+        "displayName": "Text"
+      },
+      "displayName": "Webhook Trigger"
+    },
+    "updatedBy": null,
+    "valid": true,
+    "state": "DRAFT"
+  }
+}
